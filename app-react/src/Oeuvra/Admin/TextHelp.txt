@@ -1,0 +1,66 @@
+Correctif - L'exportation 'useHistory' n'a pas été trouvée dans react-router-dom
+avatar
+Borislav Hadzhiev
+
+Dernière mise à jour : 20 avril 2022
+
+bannière
+Découvrez mon nouveau livre
+
+Correction - L'exportation 'useHistory' n'a pas été trouvée dans react-router-dom #
+Pour résoudre l'erreur "export 'useHistory' (importé en tant que 'useHistory') n'a pas été trouvé dans 'react-router-dom'", utilisez useNavigateplutôt le crochet, par exemple const navigate = useNavigate(). Le hook renvoie une fonction qui vous permet de naviguer par programmation.
+
+l'historique d'utilisation d'exportation n'a pas été trouvé dans le routeur de réaction-dom
+
+App.js
+// 👇️ import useNavigate
+import {useNavigate} from 'react-router-dom';
+
+export default function App() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // 👇️ navigate programmatically
+    navigate('/about');
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Navigate to About</button>
+    </div>
+  );
+}
+Dans la version 6 du routeur React, le useHistory()hook est remplacé par useNavigate().
+
+Le useNavigatehook renvoie une fonction qui nous permet de naviguer par programmation, par exemple après la soumission d'un formulaire.
+
+
+Le paramètre que nous avons passé à la navigatefonction est le même que le toprop sur un <Link to="/about">composant.
+
+Si vous souhaitez utiliser l'équivalent de la history.replace()méthode, passez un optionsparamètre à la navigatefonction.
+
+App.js
+import {useNavigate} from 'react-router-dom';
+
+export default function App() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // 👇️ replace set to true
+    navigate('/about', {replace: true});
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Navigate to About</button>
+    </div>
+  );
+}
+Lorsque la replacepropriété est définie truesur l'objet options, l'entrée actuelle dans la pile d'historique est remplacée par la nouvelle.
+
+En d'autres termes, la navigation vers le nouvel itinéraire ne poussera pas une nouvelle entrée dans la pile d'historique, donc si l'utilisateur clique sur le bouton de retour, il ne pourra pas naviguer vers la page précédente.
+Ceci est utile, par exemple, lorsqu'un utilisateur se connecte - vous ne voulez pas qu'il puisse cliquer sur le bouton de retour et revenir à la page de connexion.
+
+Ou si vous avez un itinéraire qui redirige les utilisateurs vers une autre page, vous ne voulez pas que les utilisateurs cliquent sur le bouton de retour et soient à nouveau redirigés.
+
+Vous pouvez également appeler la navigatefonction avec un delta pour revenir en arrière dans la pile de l'historique, par exemple, navigate(-1)c'est la même chose que d'appuyer sur le bouton de retour.

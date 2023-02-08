@@ -1,0 +1,18 @@
+    const [loading,setLoading] = useState(false);
+    
+    setInterval(() => {
+        setLoading(true)
+    },5000);
+
+    
+    if(loading === false){
+        return(
+            <>
+                <div className="mail--style">
+                    <h5>Patientez un instant...</h5>
+                    <span id="mail--load"></span>
+                </div>
+            </>
+        );
+    }
+    else{    }
